@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 
 const createWindow = () => {
@@ -10,6 +10,41 @@ const createWindow = () => {
   });
 
   win.loadURL("https://social.faysi.de/");
+
+  // Erstelle das Dropdown-Menü
+  const menuTemplate = [
+    {
+      label: 'Navigation',
+      submenu: [
+        {
+          label: 'Home',
+          click: () => { win.loadURL("https://faysi.de/"); }
+        },
+        {
+          label: 'Social',
+          click: () => { win.loadURL("https://social.faysi.de"); }
+        },
+        {
+          label: 'App Store',
+          click: () => { win.loadURL("https://apps.faysi.de"); }
+        },
+        {
+          label: 'Ai',
+          click: () => { win.loadURL("https://ai.faysi.de"); }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Exit',
+          click: () => { app.quit(); }
+        }
+      ]
+    }
+  ];
+
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu);
 }
 
 app.on('ready', () => {
